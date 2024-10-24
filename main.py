@@ -68,6 +68,15 @@ def completeTillGetValue(eixo_x, v, diff):
 
     return completeTillGetValue(eixo_x, v, diff)
 
+def applyOnEquation(entrada, coeficientes, i=0, value=0):
+    
+    if i == len(coeficientes):
+        return value
+
+    value += coeficientes[i] * (entrada**(len(coeficientes)-i))
+
+    return applyOnEquation(entrada, coeficientes, i+1, value)
+
 
 coeficientes = list(map(float, input("Digite os coeficientes do polinômio separado por espaço: ").split()))
 
@@ -79,14 +88,22 @@ diff = findDiff(eixo_x)
 
 eixo_x = completeTillGetValue(eixo_x, entrada, diff)
 
-print(eixo_x)
-
 eixo_y = []
 for x in eixo_x:
     eixo_y.append(polinomio(x, coeficientes))
 
 diffs = babbage(eixo_y)
 
+value = applyOnEquation(entrada, coeficientes)
+
 print("tabela de diferenças:")
 for c, linha in enumerate(diffs):
     print(f"nível {c}: {linha}")
+
+
+print("Entrada aplicada no polinomio:")
+print(f"{round(value)}")
+
+
+
+# 1024 + 128 + 16 + 2
